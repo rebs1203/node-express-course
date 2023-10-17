@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Hello World</h1>
+    <div id="data-div">
+
+    </div>
+    <button>click here!</button>
+
+
+    <script>
+
+        const dataDiv = document.getElementById('data-div')
+
+        const handleClick = () => {
+            fetch('/api/v1/products')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const products = data.products;
+                    const productsElement = document.createElement('p');
+                    productsElement.textContent = products;
+                    dataDiv.appendChild(productsElement);
+                })
+                .catch(error => {
+                    console.error('Fetch error:', error);
+                });
+        }
+
+        document.querySelector('button').addEventListener('click', handleClick)
+    </script>
+</html>

@@ -21,7 +21,7 @@ const getBody = (req, callback) => {
 };
 
 // here, you could declare one or more variables to store what comes back from the form.
-let item = "Enter something below.";
+let item = "<h1>Enter your name below.</h1>";
 
 // here, you can change the form below to modify the input fields and what is displayed.
 // This is just ordinary html with string interpolation.
@@ -45,9 +45,9 @@ const server = http.createServer((req, res) => {
       console.log("The body of the post is ", body);
       // here, you can add your own logic
       if (body["item"]) {
-        item = body["item"];
+        item = `Wow ${body["item"]}! That's a really cool name!`;
       } else {
-        item = "Nothing was entered.";
+        item = "C'mon, just tell us your name";
       }
       // Your code changes would end here
       res.writeHead(303, {
@@ -58,6 +58,10 @@ const server = http.createServer((req, res) => {
   } else {
     res.end(form());
   }
+});
+
+server.on("request", (req) => {
+  console.log("event received: ", req.method, req.url);
 });
 
 server.listen(3000);
