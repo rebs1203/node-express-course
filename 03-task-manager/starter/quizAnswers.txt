@@ -1,0 +1,7 @@
+1- Middleware are functions that assist you when you need to add more functionality to your HTTP requests.
+
+2- Create, Read, Update and Delete/Destroy
+
+3.1 - You have to import the 'dotenv' package to your main application file (app.js) and use '.config()'. After that, you can import your .env variable using 'proccess.env.<variableName>'
+
+3.2 - You add .env to your .gitignore file
