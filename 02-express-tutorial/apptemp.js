@@ -24,7 +24,13 @@ app.get('/api/v1/products/:productID', (req, res) => {
 app.get('/api/v1/query', (req, res) => {
     const search = req.query.search
     const cost = req.query.cost
-    const filteredProducts = products.filter((items) => items.search === search && items.cost === limit)
+    if(search) {
+        let filteredProducts = products.filter((item) => item.name.startsWith(search))
+    }
+    const limit = filteredProducts.filter((item) => { return item.price < Number(cost); });
+    if(limit) {
+        filteredProducts = filteredProducts.slice(0, Number(limit))
+    }
     res.json(filteredProducts)
 })
 
