@@ -4,7 +4,8 @@ const { people } = require('../data');
 const addPerson = (req, res) => {
     const { name } = req.body
     if(name) {
-        people.push({ id: people.length + 1, name: name });
+        const nextId = people.length > 0 ? people[people.length - 1].id + 1 : 1;
+        people.push({ id: nextId, name: req.body.name });
         res.status(201).json({ success: true, name: name });
     } else {
         res.status(400).json({ success: false, message: "Please provide a name" })
@@ -22,6 +23,7 @@ const findPerson = (req, res) => {
     } else {
         res.status(404).json({ success: false, message: "Please provide a valid id" })
     }
+    res.json(people[findId])
 }
 
 const replacePerson = (req, res) => {
