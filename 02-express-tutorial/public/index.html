@@ -11,7 +11,7 @@
     <div id="data-div">
 
     </div>
-    <button>click here!</button>
+    <button onclick="handleClick()">click here!</button>
 
 
     <script>
@@ -27,10 +27,12 @@
                     return response.json();
                 })
                 .then(data => {
-                    const products = data.products;
-                    const productsElement = document.createElement('p');
-                    productsElement.textContent = products;
-                    dataDiv.appendChild(productsElement);
+                    const products = data;
+                    products.forEach(product => {
+                        const productsElement = document.createElement('p'); 
+                        productsElement.textContent = `${product.name} - ${product.price}`;
+                        dataDiv.appendChild(productsElement);
+                    });
                 })
                 .catch(error => {
                     console.error('Fetch error:', error);
