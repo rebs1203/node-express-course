@@ -22,19 +22,26 @@ app.use(express.json());
 
 app.use("/api/v1/people", peopleRouter);
 
-//app.get('/api/v1/people', (req, res) => {
-//    res.json(people)
-//})
+app.get('/api/v1/products', (req, res) => {
+    res.json(products)
+})
 
-//app.post('/api/v1/people', (req, res) => {
-//    const { name } = req.body
-//    if(name) {
-//        people.push({ id: people.length + 1, name: name });
-//        res.status(201).json({ success: true, name: name });
-//    } else {
-//        res.status(400).json({ success: false, message: "Please provide a name" })
-//    }
-//})
+app.get('/api/v1/products/:productID', (req, res) => {
+    const id = parseInt(req.params.productID)
+    const findId = products.find((item) => item.id === id)
+    if (!findId) {
+        res.status(404).send('Product not found')
+    } else {
+        res.json(findId)
+    }
+})
+
+app.get('/api/v1/query', (req, res) => {
+    const search = req.query.search
+    const cost = req.query.cost
+    const filteredProducts = products.filter((items) => items.search === search && items.cost === limit)
+    res.json(filteredProducts)
+})
 
 app.all('*', (req, res) => {
     res.status(404).send('404 - Not Found');
